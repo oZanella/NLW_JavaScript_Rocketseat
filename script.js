@@ -1,8 +1,19 @@
-const { select } = require('@inquirer/prompts')
+const { select, input } = require('@inquirer/prompts')
+
+const cadMeta = async () => {
+  const meta = await input({ message: 'Digite sua meta:'})
+
+  if(meta.length == 0) {
+    console.log('A meta não deve ser vazia')
+  }else{
+    console.log('Meta salva com sucesso!')
+    return  
+  }
+}
 
 const start = async () => {
 
-  while(true){
+  while (true) {
 
     const opcao = await select({
       message: 'Menu >',
@@ -12,8 +23,8 @@ const start = async () => {
           value: 'cadastrar'
         },
         {
-          name:'Listar metas',
-          value:'listar'
+          name: 'Listar metas',
+          value: 'listar'
         },
         {
           name: 'Sair',
@@ -24,13 +35,13 @@ const start = async () => {
 
     switch (opcao) {
       case 'cadastrar':
-        console.log('vamos cadastrar')
+        await cadMeta()
         break
       case 'listar':
         console.log('vamos listar')
         break
       case 'sair':
-        console.log('Até a próxima! :)') 
+        console.log('Até a próxima! :)')
         return
       default:
         console.error('Opção inválida, verifique!');
