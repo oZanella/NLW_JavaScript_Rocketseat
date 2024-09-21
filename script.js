@@ -1,7 +1,7 @@
 const start = () => {
 
   while (true){
-    let opcao = 'Sair'
+    let opcao = "sair"
     switch(opcao) {
       case 'cadastrar':
         console.log('vamos cadastrar')
