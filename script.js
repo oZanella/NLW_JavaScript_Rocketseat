@@ -1,14 +1,26 @@
 const { select, input } = require('@inquirer/prompts')
 
-const cadMeta = async () => {
-  const meta = await input({ message: 'Digite sua meta:'})
+let meta = {
+  value: 'agua todo dia',
+  checked: false,
+}
 
-  if(meta.length == 0) {
+let metas = [meta]
+
+const cadMeta = async () => {
+  const meta = await input({ message: 'Digite sua meta:' })
+
+  if (meta.length == 0) {
     console.log('A meta não deve ser vazia')
-  }else{
+  } else {
     console.log('Meta salva com sucesso!')
-    return  
+    return
   }
+
+  metas.push(
+    { value: meta, checked: false }
+  )
+
 }
 
 const start = async () => {
@@ -36,6 +48,7 @@ const start = async () => {
     switch (opcao) {
       case 'cadastrar':
         await cadMeta()
+        console.log(metas)
         break
       case 'listar':
         console.log('vamos listar')
