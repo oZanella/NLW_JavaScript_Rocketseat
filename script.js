@@ -5,15 +5,13 @@ let meta = {
   checked: false,
 }
 
-let metas = [ meta ]
+let metas = [meta]
 
 const cadMeta = async () => {
   const meta = await input({ message: 'Digite sua meta:' })
 
   if (meta.length == 0) {
     console.log('A meta não deve ser vazia')
-  } else {
-    console.log('Meta salva com sucesso!')
     return
   }
 
@@ -34,8 +32,12 @@ const listarMetas = async () => {
     return
   }
 
+  metas.forEach((m) => {
+    m.checked = false
+  })
+
   respostas.forEach((resposta) => {
-    const meta = metas.find((n) => {
+    const meta = metas.find((m) => {
       return m.value == resposta
     })
 
@@ -73,13 +75,11 @@ const start = async () => {
         console.log(metas)
         break
       case 'listar':
-        await listarMetas
+        await listarMetas()
         break
       case 'sair':
         console.log('Até a próxima! :)')
         return
-      default:
-        console.error('Opção inválida, verifique!');
     }
   }
 }
