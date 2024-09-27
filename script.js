@@ -58,7 +58,7 @@ const metasRealizadas = async () => {
   }
 
   await select({
-    message: 'Metas realizadas',
+    message: 'Metas realizadas: ' + realizadas.length,  //concatenação para número de metas
     choices: [...realizadas]
   })
 
@@ -69,17 +69,44 @@ const metasAbertas = async () => {
     return meta.checked != true       //pode ser usado apenas !meta.checkd, funciona igual
   })
 
-  if(abertas.length == 0){
+  if (abertas.length == 0) {
     console.log('Não existem metas abertas! :)')
     return
   }
 
   await select({
-    message:'Metas Abertas ' + abertas.length,      //concatenação para número de metas
+    message: 'Metas Abertas: ' + abertas.length,      //concatenação para número de metas
     choices: [...abertas]
   })
 }
 
+const deletarMetas = async () => {
+  const metasDesmarcadas = metas.map((meta) => {
+    return { value: meta.value, checked: false }
+  })
+
+  const itensDeletar = await checkbox({
+    message: 'Selecione item para deletar',
+    choices: [...metasDesmarcadas],
+    instructions: false,
+  })
+
+  if (itensDeletar.length == 0) {
+    console.log('Nenhum item para deletar')
+    return
+  }
+
+  itensDeletar.forEach((item) => {
+    metas = metas.filter((meta) => {
+      return meta.value != item
+    })
+
+  })
+
+  console.log('Meta(s) deleta(s) com sucesso!')
+}
+
+//menu visível
 const start = async () => {
 
   while (true) {
@@ -104,6 +131,10 @@ const start = async () => {
           value: 'abertas'           //mesmo nome do case dentro do switch
         },
         {
+          name: 'Deletar Metas',
+          value: 'deletar'           //mesmo nome do case dentro do switch
+        },
+        {
           name: 'Sair',
           value: 'sair'
         }
@@ -123,6 +154,9 @@ const start = async () => {
         break
       case 'abertas':
         await metasAbertas()
+        break
+      case 'deletar':
+        await deletarMetas()
         break
       case 'sair':
         console.log('Até a próxima! :)')
