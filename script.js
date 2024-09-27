@@ -1,13 +1,24 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
+const fs = require("fs").promises
 
 let mensagem = 'Bem vindo ao aplicativo de metas';
 
-let meta = {
-  value: 'Agua todo dia',
-  checked: false,
+let metas
+
+const carregarMetas = async () => {
+  try {               //funciona como tentar
+    const dados = await fs.readFile("metas.json", "UTF-8")
+    metas = JSON.parse(dados)
+  }
+  catch (erro) {
+    mensagem = 'Erro ao tentar localizar metas, verifique o JSON'
+    metas = []
+  }
 }
 
-let metas = [meta]
+const salvarMetas = async () => {
+  await fs.writeFile("metas.json", JSON.stringify(metas, null, 2))
+}
 
 const cadMeta = async () => {
   const meta = await input({ message: 'Digite sua meta:' })
@@ -128,9 +139,11 @@ const motrarMensagem = () => {
 
 //menu visível
 const start = async () => {
+  await carregarMetas()
 
   while (true) {
     motrarMensagem()
+    await salvarMetas()
 
     const opcao = await select({
       message: 'Menu >',
