@@ -25,6 +25,12 @@ const cadMeta = async () => {
 }
 
 const listarMetas = async () => {
+
+  if (metas.length == 0) {
+    mensagem = 'Nenhuma meta está disponível para listar'
+    return
+  }
+
   const respostas = await checkbox({
     message: "Use as setas para mudar de meta, espaço para marcar/desmarcar e enter para confirmar",
     choices: [...metas],
@@ -35,7 +41,7 @@ const listarMetas = async () => {
     m.checked = false
   })
 
-  if (respostas.length == 0) {
+  if (respostas.ength == 0) {
     mensagem = 'Nenhuma meta selecionada'
     return
   }
