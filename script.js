@@ -36,7 +36,6 @@ const cadMeta = async () => {
 }
 
 const listarMetas = async () => {
-
   if (metas.length == 0) {
     mensagem = 'Nenhuma meta está disponível para listar'
     return
@@ -69,6 +68,11 @@ const listarMetas = async () => {
 }
 
 const metasRealizadas = async () => {
+  if (metas.length == 0) {
+    mensagem = 'Nenhuma meta está disponível para listar'
+    return
+  }
+
   const realizadas = metas.filter((meta) => {
     return meta.checked
   })
@@ -86,6 +90,11 @@ const metasRealizadas = async () => {
 }
 
 const metasAbertas = async () => {
+  if (metas.length == 0) {
+    mensagem = 'Nenhuma meta está disponível para listar'
+    return
+  }
+
   const abertas = metas.filter((meta) => {
     return meta.checked != true       //pode ser usado apenas !meta.checkd, funciona igual
   })
@@ -102,6 +111,11 @@ const metasAbertas = async () => {
 }
 
 const deletarMetas = async () => {
+  if (metas.length == 0) {
+    mensagem = 'Nenhuma meta está disponível para listar'
+    return
+  }
+
   const metasDesmarcadas = metas.map((meta) => {
     return { value: meta.value, checked: false }
   })
